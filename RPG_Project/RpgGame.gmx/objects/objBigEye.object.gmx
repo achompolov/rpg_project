@@ -55,6 +55,9 @@ maxStamina = 100;
 //Set font
 draw_set_font(fontFuture_Thin);
 
+//Set show(message)
+showMessage = 0;
+
 //Set GUI
 xBar = 47;
 
@@ -136,6 +139,13 @@ state = scrMove_State;
     if (stamina &lt; maxStamina &amp;&amp; (alarm[0]== -1)) {
         stamina+=.2;
     }
+    
+    //Show message
+    if(place_meeting(x,y,objSign)) {
+        showMessage = 1;
+    } else {
+        showMessage = 0;
+    }
 
 
 
@@ -193,8 +203,7 @@ buffer_delete(buffer);
 //Level GUI
 draw_text(16,16,"Level  "+string(level));
 
-//xpGUI
-
+//Expirience GUI
 draw_text(16,39,string("XP"));
 currentBarXP = xp + 47;
 for (xBar = 47; xBar &lt; currentBarXP; xBar++) {
@@ -222,6 +231,18 @@ for (xBar = 47; xBar &lt; currentBarST; xBar++) {
 }
 draw_sprite(sprGUI_ST_Bar,image_index,45,84);//Bar
 //draw_text(16,64,"SM: "+string(stamina)+"/"+string(maxStamina));//Text
+
+
+
+
+//Message GUI 
+if (showMessage == 1) {
+    draw_sprite(sprMessage_Bar,image_index,0,570);
+    draw_text(16,580,string(global.message));
+}
+
+
+
 </string>
           </argument>
         </arguments>

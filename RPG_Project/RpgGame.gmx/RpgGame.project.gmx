@@ -75,7 +75,6 @@
       </sprites>
       <sprites name="Fence">
         <sprite>sprites\sprFence_Side</sprite>
-        <sprite>sprites\sprFence_Down</sprite>
       </sprites>
     </sprites>
     <sprites name="Enemies">
@@ -90,12 +89,17 @@
       <sprite>sprites\sprNpc_Redhead_Man</sprite>
     </sprites>
     <sprites name="GUI">
-      <sprite>sprites\sprGUI_XP_Bar</sprite>
-      <sprite>sprites\sprGUI_HP_Bar</sprite>
-      <sprite>sprites\sprGUI_ST_Bar</sprite>
-      <sprite>sprites\sprXP</sprite>
-      <sprite>sprites\sprHP</sprite>
-      <sprite>sprites\sprST</sprite>
+      <sprites name="Stats">
+        <sprite>sprites\sprST</sprite>
+        <sprite>sprites\sprHP</sprite>
+        <sprite>sprites\sprXP</sprite>
+        <sprite>sprites\sprGUI_ST_Bar</sprite>
+        <sprite>sprites\sprGUI_HP_Bar</sprite>
+        <sprite>sprites\sprGUI_XP_Bar</sprite>
+      </sprites>
+      <sprites name="Messages">
+        <sprite>sprites\sprMessage_Bar</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background">
