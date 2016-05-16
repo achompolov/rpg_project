@@ -1,13 +1,12 @@
-///scrMove_State_Test
+///scrMove_State
 
-scrGet_Input();
 
 //Get the xMoveSpeed and yMoveSpeed
 xMoveSpeed = lengthdir_x(length,dir);
 yMoveSpeed = lengthdir_y(length,dir);
 
 /*//Attack state
-if (key_attack) {
+if (objInput.key_attack) {
     image_index = 0;
     state = scrAttack_State;
 }
@@ -15,7 +14,7 @@ if (key_attack) {
 
 
 //Dash state
-if ((key_dash) && (stamina >= 50)) {
+if ((objInput.key_dash) && (stamina >= 50)) {
     if ((xMoveSpeed > 0)||(xMoveSpeed < 0)) || ((yMoveSpeed > 0) || (yMoveSpeed < 0)) {
         state = scrDash_State;
         stamina -= 50;
@@ -24,6 +23,15 @@ if ((key_dash) && (stamina >= 50)) {
     }
 }
 
+//Get the length
+if (objInput.xaxis == 0 && objInput.yaxis == 0) {
+    length = 0;
+}else {
+    length = heroMoveSpeed;
+}
+
+//Get direction
+dir = point_direction(0,0,objInput.xaxis,objInput.yaxis);
 
 //Collision
     //Horizontal collisin
@@ -43,11 +51,6 @@ if ((key_dash) && (stamina >= 50)) {
         yMoveSpeed = 0;
     }
     y += yMoveSpeed; //Move phy_position_y
-    
-    //Sound
-    if (xMoveSpeed > 0) || (yMoveSpeed >0) {
-        
-    }
     
 
 //Sprite animation

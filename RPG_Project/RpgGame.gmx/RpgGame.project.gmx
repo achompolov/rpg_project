@@ -10,20 +10,7 @@
     <extension index="2">extensions\Multiplayer without open ports</extension>
     <extension index="3">extensions\Multiplayer - GMnet ENGINE</extension>
   </NewExtensions>
-  <sounds name="sound">
-    <sounds name="Footsteps">
-      <sound>sound\sndFootstep_9</sound>
-      <sound>sound\sndFootstep_0</sound>
-      <sound>sound\sndFootstep_1</sound>
-      <sound>sound\sndFootstep_2</sound>
-      <sound>sound\sndFootstep_3</sound>
-      <sound>sound\sndFootstep_4</sound>
-      <sound>sound\sndFootstep_5</sound>
-      <sound>sound\sndFootstep_6</sound>
-      <sound>sound\sndFootstep_7</sound>
-      <sound>sound\sndFootstep_8</sound>
-    </sounds>
-  </sounds>
+  <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Heroes">
       <sprites name="Knight">
@@ -65,6 +52,7 @@
     <sprites name="Tiles">
       <sprites name="Walls">
         <sprite>sprites\sprWall_Black</sprite>
+        <sprite>sprites\sprWall</sprite>
       </sprites>
       <sprites name="Fire">
         <sprite>sprites\sprFirePlace</sprite>
@@ -76,6 +64,9 @@
       <sprites name="Fence">
         <sprite>sprites\sprFence_Side</sprite>
       </sprites>
+      <sprites name="XP">
+        <sprite>sprites\sprXp_10</sprite>
+      </sprites>
     </sprites>
     <sprites name="Enemies">
       <sprites name="Zombie">
@@ -84,6 +75,7 @@
         <sprite>sprites\sprZombie_Right</sprite>
         <sprite>sprites\sprZombie_Left</sprite>
       </sprites>
+      <sprite>sprites\sprSlime</sprite>
     </sprites>
     <sprites name="NPC">
       <sprite>sprites\sprNpc_Redhead_Man</sprite>
@@ -101,6 +93,9 @@
         <sprite>sprites\sprMessage_Bar</sprite>
       </sprites>
     </sprites>
+    <sprites name="Door">
+      <sprite>sprites\sprDoor</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bgGrass</background>
@@ -109,14 +104,22 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scrGet_Input.gml</script>
-    <script>scripts\scrLevel_Up.gml</script>
-    <scripts name="States">
-      <script>scripts\scrAttack_State.gml</script>
-      <script>scripts\scrDash_State.gml</script>
-      <script>scripts\scrMove_State.gml</script>
-      <script>scripts\scrMove_State_Basic.gml</script>
-      <script>scripts\scrFrozen_State.gml</script>
+    <scripts name="Player">
+      <scripts name="States">
+        <script>scripts\scrFrozen_State.gml</script>
+        <script>scripts\scrMove_State.gml</script>
+        <script>scripts\scrDash_State.gml</script>
+        <script>scripts\scrAttack_State.gml</script>
+      </scripts>
+      <script>scripts\scrLevel_Up.gml</script>
+      <script>scripts\scrGet_Input.gml</script>
+    </scripts>
+    <scripts name="Menu">
+      <script>scripts\scrSave_Game.gml</script>
+      <script>scripts\scrLoad_Game.gml</script>
+    </scripts>
+    <scripts name="Enemy">
+      <script>scripts\scrEnemy_Move.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
@@ -136,6 +139,7 @@
     <objects name="Tiles">
       <objects name="Walls">
         <object>objects\objWall_Black</object>
+        <object>objects\objWall</object>
       </objects>
       <objects name="Fire">
         <object>objects\objFirePlace</object>
@@ -146,19 +150,26 @@
       </objects>
       <objects name="Signs">
         <object>objects\objSign</object>
+        <object>objects\objTestSign</object>
       </objects>
-      <object>objects\objFence_Side</object>
-      <object>objects\objFence_Down</object>
+      <object>objects\objDoor</object>
+      <object>objects\objXP</object>
     </objects>
     <objects name="NPC">
       <object>objects\objNpc_Redhead_Man</object>
     </objects>
     <objects name="Enemies">
+      <object>objects\objSlime</object>
       <object>objects\objZombie</object>
+    </objects>
+    <objects name="Menu">
+      <object>objects\objPause</object>
+      <object>objects\objInput</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rmTest</room>
+    <room>rooms\roomOne</room>
+    <room>rooms\rmPause</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

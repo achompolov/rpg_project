@@ -1,7 +1,7 @@
 ///scrLevel_Up
-if ( xp == maxXp ) {
-    level += 1
-    xp = 0;
+if ( xp >= maxXp ) {
+    level += 1;
+    xp = xp - maxXp;
     
     if (level > 0) {
         maxXp += 100;
@@ -11,16 +11,16 @@ if ( xp == maxXp ) {
         maxXp += 200;
     }
     if (level >= 10) {
-        maxHp += 350;
+        maxXp += 350;
     }
     if (level >= 15) {
-        maxHp += 500;
+        maxXp += 500;
     }
     if (level >= 25) {
-        maxHp += 1000;
+        maxXp += 1000;
     }
     if (level >= 50) {
-        maxHp += 5000;
+        maxXp += 5000;
     }
     */
 }

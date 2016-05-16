@@ -3,7 +3,7 @@
   <spriteName>sprBigEye_Down</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-12</depth>
+  <depth>-10</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -35,13 +35,18 @@ length = 0;
 dir = 0;
 spriteDirection = "Down";
 image_speed = 0;
-scrGet_Input();
 state = scrMove_State;
 
+//Get the player's xStart and yStart
+xStart = x;
+yStart = y;
+
+
 //Set level
-level = 0;
+level = 1;
 
 //Set xp
+gainXp = 0;
 xp = 0;
 maxXp = 0;
 
@@ -56,7 +61,16 @@ maxStamina = 100;
 draw_set_font(fontFuture_Thin);
 
 //Set show(message)
+width = 960;
+height = 100;
+padding = 8;
 showMessage = 0;
+start = ds_list_create();
+ds_list_add(start,0)
+count = 0;
+lastSpace = 0;
+line = 0;
+str = "";
 
 //Set GUI
 xBar = 47;
@@ -133,7 +147,17 @@ state = scrMove_State;
     script_execute(state);
     
     //Level up
-    script_execute(scrLevel_Up);
+    if (place_meeting(x, y, objXP)) {
+        xp += 135;
+        if (level &gt;= 1) {
+            maxXp = 100;
+            if ( xp &gt;= maxXp ) {
+                level += 1;
+                xp = xp - maxXp;
+            }
+        }
+    }
+        
     
     //Regen stamina
     if (stamina &lt; maxStamina &amp;&amp; (alarm[0]== -1)) {
@@ -146,9 +170,87 @@ state = scrMove_State;
     } else {
         showMessage = 0;
     }
+    
+   
+    
 
+    
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objDoor">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Go to next room
 
+if (room_exists(other.newRoom)) {
+    room_goto(other.newRoom);
+    x = other.newX;
+    y = other.newY;
+}
+    
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Remember player's start position
+persistent = true;
+
+if (room == rmPause) exit;
+
+switch (objInput.roomStartAction) {
+    case RETURN:
+        break;
+        
+    case NEW_ROOM:
+    default:
+        xStart = x;
+        yStart = y;
+        break;
+        
+    case LOAD:
+        scrLoad_Game();
+        break;
+}
+
+room_persistent = false;
+objInput.roomStartAction = 1;
 </string>
           </argument>
         </arguments>
@@ -199,13 +301,14 @@ buffer_delete(buffer);
           <argument>
             <kind>1</kind>
             <string>///Draw GUI
-
+ draw_set_colour(c_white);
+ 
 //Level GUI
 draw_text(16,16,"Level  "+string(level));
 
 //Expirience GUI
 draw_text(16,39,string("XP"));
-currentBarXP = xp + 47;
+var currentBarXP = xp + 47;
 for (xBar = 47; xBar &lt; currentBarXP; xBar++) {
     draw_sprite(sprXP,image_index,xBar,41);
 }
@@ -215,7 +318,7 @@ draw_sprite(sprGUI_XP_Bar,image_index,45,40);//Bar
 
 //Health GUI
 draw_text(16,61,string("HP"));
-currentBarHP = hp + 47;
+var currentBarHP = hp + 47;
 for (xBar = 47; xBar &lt; currentBarHP; xBar++) {
     draw_sprite(sprHP,image_index,xBar,63);
 }
@@ -225,21 +328,44 @@ draw_sprite(sprGUI_HP_Bar,image_index,45,62);//Bar
 
 //Stamina GUI
 draw_text(16,83,string("ST"));
-currentBarST = stamina + 47;
+var currentBarST = stamina + 47;
 for (xBar = 47; xBar &lt; currentBarST; xBar++) {
     draw_sprite(sprST,image_index,xBar,85);
 }
 draw_sprite(sprGUI_ST_Bar,image_index,45,84);//Bar
 //draw_text(16,64,"SM: "+string(stamina)+"/"+string(maxStamina));//Text
 
-
-
-
 //Message GUI 
+draw_set_alpha(.5);
+draw_sprite(sprMessage_Bar,image_index,160,570);
+//draw_text(16,580,string(global.message));
+draw_set_alpha(1);
 if (showMessage == 1) {
-    draw_sprite(sprMessage_Bar,image_index,0,570);
-    draw_text(16,580,string(global.message));
+    if (string_width(str) &gt; width-padding*2) {
+        global.message = string_delete(global.message,lastSpace,1);
+        global.message = string_insert("#",global.message,lastSpace);
+        ds_list_add(start,lastSpace+1);
+    }
+    if (count &lt; string_length(global.message)) {
+        if (string_char_at(global.message,count) == " ") {
+            lastSpace = count;
+        }
+        count++;
+    }
+    
+    if (string_height(str) &gt; height-padding) {
+        line++;
+    }
+    
+    str = string_copy(global.message,ds_list_find_value(start,line),count-ds_list_find_value(start,line));
+    
+    draw_text(170,580, str);
 }
+
+
+
+
+
 
 
 
